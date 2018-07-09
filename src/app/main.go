@@ -52,7 +52,7 @@ func InitLogicFunc(filename string) {
 
 	fnames := []string{"GroupAdd", "GroupDel"}
 
-	fMap := make(map[string]func(*store.GroupStore, int) error)
+	fMap = make(map[string]func(*store.GroupStore, int) error)
 	for _, fname := range fnames {
 		fn, err := p.Lookup(fname)
 		if err != nil {
