@@ -37,7 +37,7 @@ func loadHandler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	gs = store.InitGroupStore()
-	InitLogicFunc("")
+	InitLogicFunc("logic_plugin1.so")
 	http.HandleFunc("/add", addHandler)
 	http.HandleFunc("/del", delHandler)
 	http.HandleFunc("/load", loadHandler)
