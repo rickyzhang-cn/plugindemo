@@ -1,10 +1,10 @@
 package main
 
 import (
+	"demo/plugindemo/src/store"
 	"fmt"
 	"net/http"
 	"plugin"
-	"store"
 	"strconv"
 )
 
@@ -17,8 +17,6 @@ func addHandler(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 	gidStr := req.Form["gid"][0]
 	gid, _ := strconv.Atoi(gidStr)
-	fmt.Println(gid)
-	fmt.Println(fMap)
 	fMap["GroupAdd"](gs, gid)
 }
 
@@ -30,7 +28,16 @@ func delHandler(w http.ResponseWriter, req *http.Request) {
 	fMap["GroupDel"](gs, gid)
 }
 
+func showHandler(w http.ResponseWriter, req *http.Request) {
+	for _, g := range gs.Groups {
+		fmt.Fprintln(w, g.Id, g.Players, g.KV)
+	}
+}
+
 func loadHandler(w http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+	fname := req.Form["filename"][0]
+	InitLogicFunc(fname)
 
 }
 
@@ -40,14 +47,14 @@ func main() {
 	http.HandleFunc("/add", addHandler)
 	http.HandleFunc("/del", delHandler)
 	http.HandleFunc("/load", loadHandler)
+	http.HandleFunc("/show", showHandler)
 	http.ListenAndServe(":54321", nil)
 }
 
 func InitLogicFunc(filename string) {
 	p, err := plugin.Open(filename)
 	if err != nil {
-		fmt.Println("open plugin err:", err, filename)
-		return
+		panic(fmt.Sprintln("open plugin err:", err, filename))
 	}
 
 	fnames := []string{"GroupAdd", "GroupDel"}
@@ -56,11 +63,10 @@ func InitLogicFunc(filename string) {
 	for _, fname := range fnames {
 		fn, err := p.Lookup(fname)
 		if err != nil {
-			fmt.Println("not found symbol", fname, err)
-			continue
+			panic(fmt.Sprintln("not found symbol", fname, err))
 		}
 		fMap[fname] = fn.(func(*store.GroupStore, int) error)
 	}
-
+	fmt.Println("func map", fMap)
 	fmt.Println("loaded plugin successed! file=", filename)
 }

@@ -1,5 +1,7 @@
 package store
 
+import "sync"
+
 type Group struct {
 	Id      int
 	Players []string
@@ -7,6 +9,7 @@ type Group struct {
 }
 
 type GroupStore struct {
+	sync.RWMutex
 	Groups map[int]*Group
 }
 
