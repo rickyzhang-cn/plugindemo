@@ -41,6 +41,7 @@ func main() {
 	http.HandleFunc("/add", addHandler)
 	http.HandleFunc("/del", delHandler)
 	http.HandleFunc("/load", loadHandler)
+	http.ListenAndServe(":54321", nil)
 }
 
 func InitLogicFunc(filename string) {
