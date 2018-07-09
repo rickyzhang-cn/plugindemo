@@ -18,6 +18,7 @@ func addHandler(w http.ResponseWriter, req *http.Request) {
 	gidStr := req.Form["gid"][0]
 	gid, _ := strconv.Atoi(gidStr)
 	fmt.Println(gid)
+	fmt.Println(fMap)
 	fMap["GroupAdd"](gs, gid)
 }
 
