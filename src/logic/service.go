@@ -12,9 +12,9 @@ func GroupAdd(gs *store.GroupStore, gid int) error {
 	g := new(store.Group)
 	gs.Groups[gid] = g
 	g.Id = gid
-	g.Players = []string{"kevin", "kobe"}
+	g.Players = []string{"wangzhizhi", "yaoming"}
 	g.KV = make(map[int]string)
-	g.KV[1] = "garnnet"
+	g.KV[1] = "yaoming"
 	return nil
 }
 
