@@ -1,10 +1,10 @@
 package main
 
 import (
-	"demo/plugindemo/store"
 	"fmt"
 	"net/http"
 	"plugin"
+	"store"
 	"strconv"
 )
 
