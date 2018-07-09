@@ -1,8 +1,8 @@
 package main
 
 import (
-	"demo/plugindemo/store"
 	"fmt"
+	"store"
 )
 
 func GroupAdd(gs *store.GroupStore, gid int) error {
