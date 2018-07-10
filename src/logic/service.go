@@ -21,6 +21,7 @@ func GroupAdd(gs *store.GroupStore, gid int) error {
 func GroupDel(gs *store.GroupStore, gid int) error {
 	fmt.Println("group del, gid", gid)
 	gs.Lock()
+	defer gs.Unlock()
 	delete(gs.Groups, gid)
 	return nil
 }
