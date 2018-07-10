@@ -2,6 +2,7 @@
 + 演示使用golang的plugin package来实现代码动态更新
 + plugin本身只是使用cgo对dlopen，dlsym进行了简单的封装
 + plugin模块没有提供关闭so的调用
++ 只能在linux平台编译运行
 
 ## 使用方法
 + 运行./build.sh生成app
